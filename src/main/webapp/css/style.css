@@ -1,0 +1,53 @@
+#container{
+    display: flex;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+    height: 100vh;
+}
+
+#left{
+    flex: 1;
+    background-color: grey;
+    width: 25%;
+    height: 100%;
+}
+
+#right{
+    flex: 5;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+}
+
+#right-container{
+    display: contents;
+}
+
+#title{
+    border: solid black 2px;
+    flex: 0 1 auto;
+}
+
+#textarea{
+    border: solid black 2px;
+    flex: 1 1 auto;
+}
+
+#inputarea{
+    border: solid black 2px;
+    flex: 0 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+.inputbox{
+    width: 200px;
+}
+#roomlist{
+    border: solid black 2px;
+    margin: 40px;
+    height: 600px;
+}
