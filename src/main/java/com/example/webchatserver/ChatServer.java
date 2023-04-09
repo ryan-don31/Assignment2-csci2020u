@@ -2,9 +2,6 @@ package com.example.webchatserver;
 
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
@@ -24,21 +21,29 @@ public class ChatServer {
     // contains a static List of ChatRoom used to control the existing rooms and their users
 
     private static Map<String,ChatRoom> roomlist = new HashMap<>();
-    //private static Map<>
     // you may add other attributes as you see fit
-
-    @GET
-    @Path('/roomlist')
-    @Produces('application/json')
-    public void getRooms(){
-
-    }
 
     @OnOpen
     public void open(@PathParam("roomID") String roomID, Session session) throws IOException, EncodeException {
 //        accessing the roomID parameter
+
+        // if the room id does not exist, make a new chatroom object and join
+        // if it does exist, join the chatroom
+
+        // "joining and leaving" a chatroom will be handled by adding and removing users from it
+        // these are handled by setusername, removeuser
+
         System.out.println(roomID);
-        roomlist.put(roomID,new ChatRoom(roomID,session.getId()));
+
+        String userId = session.getId();
+        ChatRoom currentRoom = roomlist.get(roomID);
+
+        if(roomlist.containsKey(roomID)){
+            roomlist.get(roomID).setUserName(session.getId(), "");
+        }else{
+            roomlist.put(roomID,new ChatRoom(roomID,session.getId()));
+        }
+
         //roomList.put(session.getId(), roomID); // adding userID to a room
 //        // loading the history chat
 //        String history = loadChatRoomHistory(roomID);
@@ -57,7 +62,7 @@ public class ChatServer {
     }
 
     @OnClose
-    public void close(Session session) throws IOException, EncodeException {
+    public void close(Session session) throws IOException, EncodeException { //this gets called when the tab is closed, i.e the session ends
         String userId = session.getId();
         // do things for when the connection closes
     }
