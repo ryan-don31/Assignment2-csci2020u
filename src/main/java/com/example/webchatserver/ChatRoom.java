@@ -10,13 +10,13 @@ import java.util.Map;
  * You may add more method or attributes as needed
  * **/
 public class ChatRoom {
-    private String  code;
+    private String code; // roomID, tied to this instance of the room
 
     //each user has an unique ID associate to their ws session and their username
-    private Map<String, String> users = new HashMap<String, String>() ;
+    private Map<String, String> users = new HashMap<String, String>(); // hash map of all users in the room, they each have a code and a username
 
     // when created the chat room has at least one user
-    public ChatRoom(String code, String user){
+    public ChatRoom(String code, String user){ // constructor, adding the first user to the room
         this.code = code;
         // when created the user has not entered their username yet
         this.users.put(user, "");
@@ -36,7 +36,7 @@ public class ChatRoom {
     /**
      * This method will add the new userID to the room if not exists, or it will add a new userID,name pair
      * **/
-    public void setUserName(String userID, String name) {
+    public void setUserName(String userID, String name) { // this function could also be called add user
         // update the name
         if(users.containsKey(userID)){
             users.remove(userID);
@@ -53,7 +53,6 @@ public class ChatRoom {
         if(users.containsKey(userID)){
             users.remove(userID);
         }
-
     }
 
     public boolean inRoom(String userID){
