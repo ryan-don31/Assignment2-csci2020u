@@ -57,6 +57,9 @@ function enterRoom(code){
         console.log("Recieved message: " + event.data);
         // parsing the server's message as json
         let message = JSON.parse(event.data);
+        let newmessage = document.createElement("div")
+        newmessage.classList.add("messagebox")
+        document.getElementById("textarea").innerHTML +=
         document.getElementById("textbox").value += "[" + timestamp() + "] " + message.message + "\n";
     }
 }

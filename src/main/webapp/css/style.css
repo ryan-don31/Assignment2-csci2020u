@@ -5,12 +5,15 @@
 
 body{
     font-family: "clash";
+    font-size: x-small;
+    color: white;
+    background-image: url("../images/backdrop.png");
 }
 
 #container{
     display: flex;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 60vh;
+    padding-right: 60vh;
     margin-right: 0px;
     margin-left: 0px;
     height: 100vh;
@@ -18,9 +21,11 @@ body{
 
 #left{
     flex: 1;
-    background-color: grey;
+    background-color: #767860;
     width: 25%;
     height: 100%;
+    border-right: solid black 2px;
+    border-left: solid black 4px;
 }
 
 #right{
@@ -28,6 +33,7 @@ body{
     height: 100%;
     display: flex;
     flex-flow: column;
+    border-right: solid black 4px;
 }
 
 #right-container{
@@ -35,28 +41,38 @@ body{
 }
 
 #title{
-    border: solid black 2px;
     flex: 0 1 auto;
+    background-color: #454541;
+}
+
+area{
+    cursor: pointer;
+}
+
+#topbar{
+    width: 100%;
 }
 
 #textarea{
-    border: solid black 2px;
     flex: 1 1 auto;
 }
 
 #inputarea{
-    border: solid black 2px;
     flex: 0 1 auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px;
+    border-top: solid black 2px;
+    background-image: linear-gradient(
+    #787760,
+    #767860
+    );
 }
 .inputbox{
-    width: 200px;
+    height: 30px;
+    width: 100%;
 }
 .left-container{
-    border: solid black 2px;
     margin: 40px;
     height: 600px;
     display: flex;
@@ -65,24 +81,36 @@ body{
     justify-content: center;
 }
 
-#roomlist{
-
+ul{
+    list-style-type: none;
+    text-decoration: solid;
 }
 
 #createbutton{
     padding: 20px;
     background-color: lightblue;
+    cursor: pointer;
 }
 
 #textarea{
     text-align: center;
+    background-color: #454541;
 }
 
 textarea{
     resize: none;
-    border: solid black 2px;
-    width: 60%;
-    height: 60%;
+    width: 90%;
+    height: 90%;
     box-sizing: border-box;
-    margin: 40px;
+}
+
+.messagebox{
+    width: 100%;
+    margin: 25px;
+}
+
+#submit{
+    cursor: pointer;
+    width: 80px;
+    height: 50px;
 }
