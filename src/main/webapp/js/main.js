@@ -27,30 +27,38 @@ function newRoom(){
         method: 'GET',
         headers: {
             'Accept': 'text/plain',
-        },
+        }
     })
-        .then(response => response.text())
-        .then(response => {
-            refreshRooms()
-            // refresh the list of rooms
+    .then(response => response.text())
+    .then(response => {
+        refreshRooms()
+        // refresh the list of rooms
+        enterRoom(response)
+    })
+}
 
-            // create the web socket
-            ws = new WebSocket("ws://localhost:8080/WSChatServer-1.0-SNAPSHOT/ws/"+response);
-
-            // parse messages received from the server and update the UI accordingly
-            ws.onmessage = function (event) {
-                console.log("Recieved message: "+event.data);
-                // parsing the server's message as json
-                let message = JSON.parse(event.data);
-                document.getElementById("textbox").value += "[" + timestamp() + "] " + message.message + "\n";
-                // handle message
-            }
-        })
-        .then(response => enterRoom(response)); // enter the room with the code
+function roomClick(event){
+    enterRoom(event.target.innerHTML)
 }
 
 function enterRoom(code){
-    console.log("ENTER ROOM CALLED")
+    console.log("Room code is: " + code)
+    if(ws != null){
+        console.log("Closed socket")
+        ws.close()
+    }
+
+    console.log("booty ass")
+
+    ws = new WebSocket("ws://localhost:8080/WSChatServer-1.0-SNAPSHOT/ws/"+code);
+
+    // parse messages received from the server and update the UI accordingly
+    ws.onmessage = function (event) {
+        console.log("Recieved message: " + event.data);
+        // parsing the server's message as json
+        let message = JSON.parse(event.data);
+        document.getElementById("textbox").value += "[" + timestamp() + "] " + message.message + "\n";
+    }
 }
 
 function timestamp() {
@@ -71,17 +79,18 @@ function refreshRooms(){
         method: 'GET',
         headers: {
             'Accept': 'application/json',
-        },
+        }
     })
     .then(response => response.json())
     .then(response => {
         rooms = response.rooms
         for(let room of rooms){
             var li = document.createElement('li')
-            li.innerHTML = room
-            li.addEventListener('click',function() {
-                enterRoom(room)
-            })
+            var a = document.createElement('a')
+            a.innerHTML = room
+            a.href = "#"
+            a.addEventListener('click',roomClick)
+            li.appendChild(a)
             listcontainer.appendChild(li)
         }
 

@@ -25,15 +25,6 @@ public class ChatServer {
 
     @OnOpen
     public void open(@PathParam("roomID") String roomID, Session session) throws IOException, EncodeException {
-//        accessing the roomID parameter
-
-        // if the room id does not exist, make a new chatroom object and join
-        // if it does exist, join the chatroom
-
-        // "joining and leaving" a chatroom will be handled by adding and removing users from it
-        // these are handled by setusername, removeuser
-
-        System.out.println(roomID);
 
         String userId = session.getId();
         ChatRoom currentRoom = roomlist.get(roomID);
@@ -44,26 +35,26 @@ public class ChatServer {
             roomlist.put(roomID,new ChatRoom(roomID,session.getId()));
         }
 
-        //roomList.put(session.getId(), roomID); // adding userID to a room
-//        // loading the history chat
-//        String history = loadChatRoomHistory(roomID);
-//        System.out.println("Room joined ");
-//        if (history!=null && !(history.isBlank())){
-//            System.out.println(history);
-//            history = history.replaceAll(System.lineSeparator(), "\\\n");
-//            System.out.println(history);
-//            session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\""+history+" \\n Chat room history loaded\"}");
-//            roomHistoryList.put(roomID, history+" \\n "+roomID + " room resumed.");
-//        }
-//        if(!roomHistoryList.containsKey(roomID)) { // only if this room has no history yet
-//            roomHistoryList.put(roomID, roomID + " room Created."); //initiating the room history
-//        }
         session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server "+roomID+"): Welcome to the chat room. Please state your username to begin.\"}");
     }
 
     @OnClose
-    public void close(Session session) throws IOException, EncodeException { //this gets called when the tab is closed, i.e the session ends
+    public void close(Session session, @PathParam("roomID") String roomID) throws IOException, EncodeException { //this gets called when the tab is closed, i.e the session ends
         String userId = session.getId();
+        ChatRoom room = roomlist.get(roomID);
+        ChatRoom currentRoom = roomlist.get(roomID);
+        String username = currentRoom.getUsers().get(userId);
+
+        room.removeUser(userId);
+        if(room.getUsers().isEmpty()){
+            roomlist.remove(roomID);
+        }
+
+        for (Session peer : session.getOpenSessions()){ //broadcast this person left the server
+            if(currentRoom.inRoom(peer.getId())) { // broadcast only to those in the same room
+                peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server): " + username + " left the chat room.\"}");
+            }
+        }
         // do things for when the connection closes
     }
 
