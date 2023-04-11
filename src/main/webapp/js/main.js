@@ -1,4 +1,5 @@
 let ws;
+let roomCode;
 
 (function(){
     document.getElementById("createbutton").addEventListener('click',newRoom)
@@ -42,13 +43,12 @@ function roomClick(event){
 }
 
 function enterRoom(code){
+    roomCode = code
     console.log("Room code is: " + code)
     if(ws != null){
         console.log("Closed socket")
         ws.close()
     }
-
-    console.log("booty ass")
 
     ws = new WebSocket("ws://localhost:8080/WSChatServer-1.0-SNAPSHOT/ws/"+code);
 
@@ -57,10 +57,24 @@ function enterRoom(code){
         console.log("Recieved message: " + event.data);
         // parsing the server's message as json
         let message = JSON.parse(event.data);
-        let newmessage = document.createElement("div")
-        newmessage.classList.add("messagebox")
-        document.getElementById("textarea").innerHTML +=
-        document.getElementById("textbox").value += "[" + timestamp() + "] " + message.message + "\n";
+
+        if(message.message.includes("Server")){//server message (welcome to room, x has joined, x has left)
+            let servermessage = document.createElement('div')
+            servermessage.innerHTML = "<h3>" + "[" + timestamp() + "] " + message.message + "</h3>"
+            servermessage.classList.add("serverbox")
+            document.getElementById("textarea").prepend(servermessage)
+        }else{//normal user message
+            let usermessage = document.createElement('div')
+            usermessage.innerHTML = "<h3>" + "[" + timestamp() + "] " + message.message + "</h3>"
+            usermessage.classList.add("textbox")
+            document.getElementById("textarea").prepend(usermessage)
+        }
+        refreshRooms()
+        //div element, width 100%, static height, border on top and bottom
+            //each div has the following format:
+            // Name [time] \n
+            // message
+        // document.getElementById("textbox").value += "[" + timestamp() + "] " + message.message + "\n";
     }
 }
 
@@ -72,6 +86,7 @@ function timestamp() {
 
 //THIS WILL CALL FROM ROOMSERVLET
 function refreshRooms(){
+    console.log(roomCode)
     // get roomlist from api
     // repopulate list on screen
     var listcontainer = document.getElementById('roomlist')
@@ -99,4 +114,7 @@ function refreshRooms(){
 
     })
     .catch(err => console.log(err))
+    if(roomCode){
+        document.getElementById("currentroom").innerHTML = roomCode
+    }
 }

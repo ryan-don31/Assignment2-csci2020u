@@ -8,10 +8,12 @@ body{
     font-size: x-small;
     color: white;
     background-image: url("../images/backdrop.png");
+    background-size: cover;
 }
 
 #container{
     display: flex;
+    width: auto;
     padding-left: 60vh;
     padding-right: 60vh;
     margin-right: 0px;
@@ -22,7 +24,6 @@ body{
 #left{
     flex: 1;
     background-color: #767860;
-    width: 25%;
     height: 100%;
     border-right: solid black 2px;
     border-left: solid black 4px;
@@ -37,12 +38,16 @@ body{
 }
 
 #right-container{
-    display: contents;
+    background-color: #767860;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 500px;
 }
 
 #title{
-    flex: 0 1 auto;
-    background-color: #454541;
+    background-color: #767860;
+    height: 150px;
 }
 
 area{
@@ -53,12 +58,18 @@ area{
     width: 100%;
 }
 
+#textcontainer{
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: #454541;
+}
+
 #textarea{
-    flex: 1 1 auto;
+    position: relative;
+    bottom: 0;
 }
 
 #inputarea{
-    flex: 0 1 auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -73,44 +84,101 @@ area{
     width: 100%;
 }
 .left-container{
-    margin: 40px;
-    height: 600px;
+    margin: 30px;
+    margin-top: 60px;
+    width: 160px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
-ul{
+#roomlistlabel{
+    text-align: center;
+}
+
+#roomlist-container{
+    background-color: #6b6e58;
+    border: solid black 1px;
+    margin: 2px;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+#roomlist{
     list-style-type: none;
     text-decoration: solid;
+    padding: 0;
+    margin: 5px;
+}
+
+#roomlist li{
+    padding: 5px;
 }
 
 #createbutton{
-    padding: 20px;
+    width: 100%;
+    height: 40px;
     background-color: lightblue;
     cursor: pointer;
 }
 
+#refresh{
+    width: 100%;
+    height: 40px;
+    background-color: lightgrey;
+    cursor: pointer;
+}
+
 #textarea{
+    position: relative;
+    bottom: 0;
     text-align: center;
     background-color: #454541;
-}
-
-textarea{
-    resize: none;
-    width: 90%;
-    height: 90%;
-    box-sizing: border-box;
-}
-
-.messagebox{
-    width: 100%;
-    margin: 25px;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: auto;
 }
 
 #submit{
     cursor: pointer;
     width: 80px;
     height: 50px;
+}
+
+.textbox{
+    width: 85%;
+    height: auto;
+    text-align: left;
+    line-height: 24px;
+    margin: auto;
+    border-top: solid black 1px;
+    overflow: hidden;
+    color: #f1f1e9;
+}
+
+.textbox h3{
+    margin-top: 15px;
+}
+
+.serverbox{
+    width: 85%;
+    height: auto;
+    text-align: left;
+    margin: auto;
+    border-top: solid black 1px;
+    color: #0ab20a;
+    overflow: hidden;
+}
+
+.serverbox h3{
+    margin-top: 15px
+}
+
+#aboutsection{
+    border: solid black 2px;
+    margin: 40px;
+}
+
+#roomshower{
+    margin: 24px;
+    font-size: large;
 }

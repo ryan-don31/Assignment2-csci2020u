@@ -27,24 +27,31 @@
   <div id="container">
     <div id="left">
       <div class="left-container">
-        <p>Chat Room</p>
-        <ul id="roomlist">
-        </ul>
-        <button id="createbutton">Create A New Room</button>
-        <button id="refresh">Refresh</button>
+        <div id="roomlistlabel">
+          <p>Chat Rooms:</p>
+        </div>
+        <div id="roomlist-container">
+          <ul id="roomlist">
+          </ul>
+        </div>
+        <div id="roomlistbuttons">
+          <button id="createbutton">Create</button>
+          <button id="refresh">Refresh</button>
+        </div>
       </div>
     </div>
     <div id="right">
       <div id="right-container">
         <div id="title">
-          <img id="topbar" src="images/topbar1.png" usemap="barmap">
-          <map name="barmap">
-            <area shape="rect" coords="42,10,246,50" href="#">
-          </map>
+          <a href="about.html">
+            <img id="topbar" href="about.html" src="images/topbar1.png">
+          </a>
+          <p id="roomshower">Current Room: <a id="currentroom">None!</a></p>
         </div>
-        <div id="textarea">
-
-<!--          <textarea id="textbox" readonly></textarea>-->
+        <div id="textcontainer">
+          <div id="textarea">
+            <!--          <textarea id="textbox" readonly></textarea>-->
+          </div>
         </div>
         <div id="inputarea">
           <input class="inputbox">
