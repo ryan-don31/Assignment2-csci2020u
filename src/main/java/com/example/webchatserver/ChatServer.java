@@ -61,8 +61,8 @@ public class ChatServer {
     @OnMessage
     public void handleMessage(String comm, Session session, @PathParam("roomID") String roomID) throws IOException, EncodeException {
         //possible cases:
-        //first message = set message to their user name
-        //
+        //first message = set their user name to the message
+        //messages after = normal message
 
         String userId = session.getId(); // userid of current user
         JSONObject commjson = new JSONObject(comm); // json from message sent from javascript
@@ -79,7 +79,7 @@ public class ChatServer {
                     peer.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(" + username + "): " + message + "\"}");
                 }
             }
-        }else{
+        }else{//is their first message
             currentRoom.setUserName(session.getId(),message);
             session.getBasicRemote().sendText("{\"type\": \"chat\", \"message\":\"(Server "+roomID+"): Welcome, " + message + "!\"}");
 
