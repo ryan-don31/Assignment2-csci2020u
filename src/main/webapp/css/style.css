@@ -176,6 +176,8 @@ area{
 #aboutsection{
     border: solid black 2px;
     margin: 40px;
+    font-size: small;
+    line-height: 40px;
 }
 
 #roomshower{
