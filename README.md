@@ -1,4 +1,4 @@
-# Clash of Clans Chat Room
+# Chat Room
 
 This is a group assignment for our Software Systems Development & Integration (CSCI2020U) class at Ontario Tech University. We were tasked to create a text chat application that allows multiple users to create and join chatrooms where they can send messages to each other.
 
